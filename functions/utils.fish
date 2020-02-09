@@ -11,13 +11,13 @@ alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 function server --description "Start an HTTP server from a directory"
-  open http://localhost:8080/ 
+  open http://localhost:8080/
   and python -m SimpleHTTPServer 8080
-end 
+end
 
 # function httpcompression
   # curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' $argv | grep '^Content-Encoding:'
-  # and echo "$argv is encoded using ${encoding#* }" 
+  # and echo "$argv is encoded using ${encoding#* }"
   # or echo "$argv is not using any encoding"
 # end
 
@@ -83,36 +83,4 @@ end
 
 function gpip
   env PIP_REQUIRE_VIRTUALENV='' pip $argv
-end
-
-################################
-###  Mac OS Related
-################################
-# Flush Directory Service cache
-alias flush="dscacheutil -flushcache"
-
-# Empty the Trash
-alias emptytrash="rm -rfv ~/.Trash"
-
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.Finder AppleShowAllFiles -bool true and killall Finder"
-alias hide="defaults write com.apple.Finder AppleShowAllFiles -bool false and killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false and killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true and killall Finder"
-
-# Disable Spotlight
-alias spotoff="sudo mdutil -a -i off"
-# Enable Spotlight
-alias spoton="sudo mdutil -a -i on"
-
-function posix-source
-	for i in (cat $argv)
-		set arr (echo $i |tr = \n)
-  		set -gx $arr[1] $arr[2]
-	end
 end
